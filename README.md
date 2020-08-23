@@ -9,7 +9,7 @@
 ## Steps to Begin Development
 
 0. Install VSCode
-1. Download Unity Hub [here](https://store.unity.com/download/thank-you?thank-you=personal&os=win&nid=1697)
+1. Download Unity Hub [here](https://unity3d.com/get-unity/download)
 2. Install Unity via Unity Hub, ensuring that you have included the following modules:
    - Microsoft Visual Studio Community 2019
    - Android Build Support
