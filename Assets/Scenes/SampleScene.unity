@@ -420,6 +420,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CB_11.01
       objectReference: {fileID: 0}
+    - target: {fileID: 7271877316383450301, guid: 2eb75a26f76575e4494833bf39a74f7c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7271877316383450302, guid: 2eb75a26f76575e4494833bf39a74f7c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
