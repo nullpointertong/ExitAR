@@ -6,58 +6,62 @@ public class DrawWalkingPathLine : MonoBehaviour
 {
     public LineRenderer walkingPath;
     private Vector3[] positions = null;
-
     public Camera cam;
 
-    public float waitTime = 5;
+    public int numPointsToDisplay = 4;
+    private Vector3[] displayPositions = null;
 
-    int nodeIndex = 0;
+    private int numVertices = 13;
+
+    public float waitTime = 7;
+    int nodeIndex = 1;
+
+    private float startX = 0;
+    private float startZ = 0;
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        int numVertices = walkingPath.positionCount;
-
         positions = new Vector3[numVertices];
+        displayPositions = new Vector3[numPointsToDisplay];
 
         walkingPath.GetPositions(positions);
 
-        Debug.Log(positions);
+        walkingPath.positionCount = displayPositions.Length;
+
+        startX = walkingPath.GetPosition(0).x;
+        startZ = walkingPath.GetPosition(0).z;
+
+        displayPositions[0].x = startX;
+        displayPositions[0].y = 7;
+        displayPositions[0].z = startZ;
 
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
 
-            UpdateWalkingPath();
+            UpdateDisplayPathNodes();
         }
     }
 
-    void UpdateWalkingPath()
+    void UpdateDisplayPathNodes()
     {
-        Vector3 farthestNode = new Vector3(0, 0, 0);
+        // copy sub into display
+        for (int i = 1; i < displayPositions.Length; i++, nodeIndex++)
+        {
+            displayPositions[i] = positions[nodeIndex];
+        }
 
-        Vector3 node = walkingPath.GetPosition(nodeIndex);
-        Vector3 nextNode = walkingPath.GetPosition(nodeIndex + 1);
+        float offsetX = displayPositions[0].x - displayPositions[1].x;
+        float offsetZ = displayPositions[0].z - displayPositions[1].z;
 
-        Vector3 pos = cam.transform.position;
+        for (int i = 1; i < displayPositions.Length; i++)
+        {
+            displayPositions[i].x += offsetX;
+            displayPositions[i].z += offsetZ;
+        }
 
-        pos = nextNode;
-        pos.x += 1;
-        pos.y = 7;
-
-        cam.transform.position = pos;
-
-        nodeIndex++;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Check if route has been updated
-
-        // If Routed updated, redraw the Route
-
-        // Else return
+        walkingPath.SetPositions(displayPositions);
+        Debug.Log("Updating");
     }
 }
